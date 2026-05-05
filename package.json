@@ -1,0 +1,15 @@
+{
+  "name": "dikoros",
+  "version": "0.0.0",
+  "private": true,
+  "description": "DIKOROS — единая цифровая инфраструктура (Medusa + Next.js + Payload + RN)",
+  "packageManager": "pnpm@9.15.0",
+  "engines": {
+    "node": ">=20"
+  },
+  "scripts": {
+    "dev:backend": "pnpm --filter backend dev",
+    "dev:web": "pnpm --filter web dev",
+    "dev:mobile": "pnpm --filter mobile start"
+  }
+}
