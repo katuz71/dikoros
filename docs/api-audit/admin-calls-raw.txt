@@ -1,0 +1,34 @@
+﻿await fetch('/api/promo-codes/' + id + '/toggle', { method: 'PUT' });
+await fetch('/api/promo-codes/' + id, { method: 'DELETE' });
+await fetch(`/categories/${data.id}/banner`, { method: 'POST', body: fd });
+const res = await fetch(`${API_BASE_URL}/api/admin/user/${encodeURIComponent(phone)}`, { method: 'DELETE' });
+const res = await fetch(`${API_BASE_URL}/api/orders/${orderId}`);
+const res = await fetch(`${API_BASE_URL}/api/users/${encodeURIComponent(pathPhone)}`, {
+const res = await fetch(`/categories/${categoryId}/banners?image_url=${encodeURIComponent(imageUrl)}`, { method: 'DELETE' });
+const res = await fetch(`/categories/${categoryId}/banners`, { method: 'POST', body: formData });
+const res = await fetch(`/categories/${id}`, { method: 'DELETE' });
+const res = await fetch(url);
+const response = await fetch('/all-categories');
+const response = await fetch('/api/import_xml', {
+const response = await fetch('/api/orders?t=' + Date.now());
+const response = await fetch('/api/promo-codes');
+const response = await fetch('/api/promo-codes', {
+const response = await fetch('/api/sync/catalog', {
+const response = await fetch('/banners');
+const response = await fetch('/banners', {
+const response = await fetch('/categories', {
+const response = await fetch('/orders/export');
+const response = await fetch('/upload', {
+const response = await fetch('/upload_csv', { method: 'POST', body: formData });
+const response = await fetch(`${API_BASE_URL}/api/admin/users/delete-batch`, {
+const response = await fetch(`${API_BASE_URL}/api/orders/${currentOrderId}/status`, {
+const response = await fetch(`${API_BASE_URL}/api/orders/${orderId}`, {
+const response = await fetch(`${API_BASE_URL}/api/orders/delete-batch`, {
+const response = await fetch(`/api/products?${params.toString()}`);
+const response = await fetch(`/banners/${id}`, { method: 'DELETE' });
+const response = await fetch(`/categories/${categoryId}/banners`, { method: 'POST', body: formData });
+const response = await fetch(`/products/${id}`);
+const response = await fetch(`/products/${id}`, {
+const response = await fetch(url);
+response = await fetch('/products', {
+response = await fetch(`/products/${currentEditingId}`, {

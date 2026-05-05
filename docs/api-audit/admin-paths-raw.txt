@@ -1,0 +1,12 @@
+﻿/all-categories
+/api/import_xml
+/api/promo-codes
+/api/promo-codes/
+/api/sync/catalog
+/banners
+/categories
+/orders/export
+/products
+/toggle
+/upload
+/upload_csv
