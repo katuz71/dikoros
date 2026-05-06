@@ -1,0 +1,99 @@
+﻿=== 01_page_ua.html ===
+  title      : Блог інтернет-магазину Дикорос — корисні рослини та гриби України
+  description: Все про дикорослі рослини та гриби — корисні та цікаві статті у блозі від виробника продукції з мухоморів, трав та ягід Дикорос. Переглянути увесь асортимент мікродозінгу та настоянок на dikoros-ua.com
+  h1         : Блог про корисні рослини та гриби України
+  canonical  : https://dikoros-ua.com/blog/
+  og:title   : Блог інтернет-магазину Дикорос — корисні рослини та гриби України
+  og:desc    : Все про дикорослі рослини та гриби — корисні та цікаві статті у блозі від виробника продукції з мухоморів, трав та ягід Дикорос. Переглянути увесь асортимент мікродозінгу та настоянок на dikoros-ua.com
+  og:image   : https://dikoros-ua.com/content/images/2/632x650l90nn0/44005449345320.jpg
+  robots     : all
+  hreflang   : 3 тегов
+
+=== 02_page_en.html ===
+  title      : Discounts and promotions on mushrooms in the Dikoros
+  description: Sale in the DikorosUA store of mushroom, herb and berry products — promotions on dried mushrooms and microdosing from amanita mushrooms. Buy sea buckthorn and chanterelles in capsules at a discount on the website dikoros-ua.com
+  h1         : Promotions for products from fly agaric mushrooms, herbs and berries on the DykorosUA website
+  canonical  : https://dikoros-ua.com/en/aktsii/
+  og:title   : Discounts and promotions on mushrooms in the Dikoros
+  og:desc    : Sale in the DikorosUA store of mushroom, herb and berry products — promotions on dried mushrooms and microdosing from amanita mushrooms. Buy sea buckthorn and chanterelles in capsules at a discount on the website dikoros-ua.com
+  og:image   : https://dikoros-ua.com/content/images/2/632x650l90nn0/44005449345320.jpg
+  robots     : all
+  hreflang   : 3 тегов
+
+=== 03_page_ru.html ===
+  title      : Микродозинг чага купить у производителя Dikoros по доступной цене
+  description: Чага гриб заказать в формате микродозинга по доступной цене и большой пользой для организма от производителя Дикорос. Микродозинг березовая чага: таблетки и порошок от производителя Дикорос. Купить чагу в Украине на сайте dikoros-ua.com с быстрой доставкой
+  h1         : Гриб чага в микродозинге
+  canonical  : https://dikoros-ua.com/ru/hryb-chaha-u-mikrodozynhu/
+  og:title   : Микродозинг чага купить у производителя Dikoros по доступной цене
+  og:desc    : Гриб чага (Inonotus obliquus), известный также как березовый гриб, является паразитическим грибом, растущим преимущественно на березах в северных регионах, включая Украину. Снаружи он смотрится как черный, неровный нарост на стволе дерева. Чаг...
+  og:image   : https://dikoros-ua.com/content/images/35/615x615l80mc0/79943225597628.jpg
+  robots     : all
+  hreflang   : 3 тегов
+
+=== 04_news_ua.html ===
+  title      : Увага! 📢 Запускаємо акцію “Гриб місяця”! ✨🍄 — Dikoros
+  description: Читати &quot;Увага! 📢 Запускаємо акцію “Гриб місяця”! ✨🍄&quot; від ДикоросUA — гриби з чистих лісів Полісся
+  h1         : Увага! 📢 Запускаємо акцію “Гриб місяця”! ✨🍄
+  canonical  : https://dikoros-ua.com/uvaha-zapuskaiemo-aktsiiu-hryb-misiatsia/
+  og:title   : Увага! 📢 Запускаємо акцію “Гриб місяця”! ✨🍄
+  og:desc    : Щомісяця — новий фаворит за суперціною. Свіжо, смачно, вигідно! Дивитися всі товари:
+  og:image   : https://dikoros-ua.com/content/images/28/1200x400e80nn0/uvaha-zapuskaiemo-aktsiiu-hryb-misiatsia-92186414056201.jpg
+  robots     : all
+  hreflang   : 3 тегов
+
+=== 05_news_en.html ===
+  title      : Free delivery Meest Post - Dikoros
+  description: Information about Free delivery Meest Post - Dikoros. More on dikoros-ua.com
+  h1         : About Free delivery Meest Post
+  canonical  : https://dikoros-ua.com/en/meest-dikoros/
+  og:title   : Free delivery Meest Post
+  og:desc    : 
+  og:image   : https://dikoros-ua.com/content/images/45/1200x899l80nn0/meest-dikoros-12778071780553.jpg
+  robots     : all
+  hreflang   : 3 тегов
+
+=== 06_news_ru.html ===
+  title      : День Святой Троицы! — Dikoros
+  description: Read &quot;День Святой Троицы!&quot; from DykorosUA — mushrooms from the clean forests of Polissia
+  h1         : День Святой Троицы!
+  canonical  : https://dikoros-ua.com/ru/den-sviatoi-triitsi/
+  og:title   : День Святой Троицы!
+  og:desc    : День Святої Трійці!
+  og:image   : https://dikoros-ua.com/content/images/1/1200x400e80nn0/den-sviatoi-triitsi-91586369522078.jpg
+  robots     : all
+  hreflang   : 3 тегов
+
+=== 07_catalog_ua.html ===
+  title      : Купити Зморшкова шапинка (лат. Verpa bohemica) сушена, 1 сорт - 50 грам  , Дикорос
+  description: Зморшкова шапинка (лат. Verpa bohemica) сушена, 1 сорт - 50 грам за ціною 250.00 грн — замовити у виробника продукції з грибів, трав та ягід Дикорос . Корисні Сушені гриби купити на dikoros-ua.com, тел.: (063)25 26 8 24, СШ-01С50
+  h1         : Зморшкова шапинка (лат. Verpa bohemica) сушена, 1 сорт - 50 грам
+  canonical  : https://dikoros-ua.com/zmorshkova-shapynka-lat.-verpa-bohemica-sushena-1-sort-50-hram/
+  og:title   : Зморшкова шапинка (лат. Verpa bohemica) сушена, 1 сорт - 50 грам
+  og:desc    : Зморшкова шапинка (лат. Verpa bohemica) Сушена Будова Полодові тіла прямостоячі, до 10-15 см висотою. Шапинка дзвіночкоподібна, 2-5 см висотою, 2-5 см в діаметрі, жовтувато-бура, вохряна, з тісно розташованими складками, що з&rsquo;єднуються попер...
+  og:image   : https://dikoros-ua.com/content/images/22/1024x1024l80mc0/zmorshkova-shapynka-lat.-verpa-bohemica-sushena-1-sort-50-hram-72066378489328.png
+  robots     : all
+  hreflang   : 3 тегов
+
+=== 08_catalog_en.html ===
+  title      : Buy Red viburnum (Viburnum opulus) dried - 100 grams  , Dikoros
+  description: Red viburnum (Viburnum opulus) dried - 100 grams — order from the producer of wild mushroom, herb and berry products at the best price ₴120.00. Buy useful Herbs and berries on dikoros-ua.com, phone: (063)25 26 8 24, КЧ-01С
+  h1         : Red viburnum (Viburnum opulus) dried - 100 grams
+  canonical  : https://dikoros-ua.com/en/kalyna-chervona-viburnum-opulus-sushena-100-hram/
+  og:title   : Red viburnum (Viburnum opulus) dried - 100 grams
+  og:desc    : Common viburnum is a traditional plant of Ukrainian culture and folk medicine. Dried viburnum fruits are used to make teas, infusions and decoctions. The drink has a characteristic sour-bitter taste and rich aroma and is used as a strengthening an...
+  og:image   : https://dikoros-ua.com/content/images/28/740x493l80mc0/92767545044572.jpeg
+  robots     : all
+  hreflang   : 3 тегов
+
+=== 09_catalog_ru.html ===
+  title      : Купить Микродозинг MIX Brain Booster Микс ежовиков + мицелий 60 капсул по 0,5 г  , Дикорос
+  description: Микродозинг MIX Brain Booster Микс ежовиков + мицелий 60 капсул по 0,5 г по цене 390.00 грн — заказать у производителя продукции из грибов, трав и ягод Дикорос . Полезны Микродозинг купить на dikoros-ua.com, тел.: (063)25 26 8 24, ЇМК-6005
+  h1         : Микродозинг MIX Brain Booster Микс ежовиков + мицелий 60 капсул по 0,5 г
+  canonical  : https://dikoros-ua.com/ru/mikrodozinh-mix-brain-booster-miks-yizhovykiv-mitselii-60-kapsul-po-05-hrama/
+  og:title   : Микродозинг MIX Brain Booster Микс ежовиков + мицелий 60 капсул по 0,5 г
+  og:desc    : Вес действующего вещества 0,5 г (&plusmn;5%). Упаковка 60 или 120 капсул. Ежовик гребенчатый представлен в формате комплекса ферментированного мицелия и плодовых тел в соотношении : 60/40 В этом комплексе соединены в равных частях Мицеллярная ма...
+  og:image   : https://dikoros-ua.com/content/images/19/1024x1024l80mc0/96385610002576.png
+  robots     : all
+  hreflang   : 3 тегов
+
