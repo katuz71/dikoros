@@ -1,0 +1,47 @@
+# DIKOROS — локальная инфра для разработки Medusa 2.x
+# Использовать только для dev. Прод-конфиг будет отдельным файлом.
+
+services:
+  postgres:
+    image: postgres:16-alpine
+    container_name: medusa_postgres_dev
+    restart: unless-stopped
+    environment:
+      POSTGRES_USER: medusa
+      POSTGRES_PASSWORD: medusa_pass
+      POSTGRES_DB: medusa_db
+    ports:
+      - "5432:5432"
+    volumes:
+      - medusa_pg_data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U medusa -d medusa_db"]
+      interval: 5s
+      timeout: 5s
+      retries: 10
+    networks:
+      - medusa_dev
+
+  redis:
+    image: redis:7-alpine
+    container_name: medusa_redis_dev
+    restart: unless-stopped
+    ports:
+      - "6379:6379"
+    volumes:
+      - medusa_redis_data:/data
+    healthcheck:
+      test: ["CMD", "redis-cli", "ping"]
+      interval: 5s
+      timeout: 3s
+      retries: 10
+    networks:
+      - medusa_dev
+
+volumes:
+  medusa_pg_data:
+  medusa_redis_data:
+
+networks:
+  medusa_dev:
+    driver: bridge
