@@ -7,14 +7,12 @@ import {
 } from "@medusajs/framework/utils";
 import {
   createApiKeysWorkflow,
-  createCollectionsWorkflow,
   createInventoryLevelsWorkflow,
   createProductCategoriesWorkflow,
   createProductsWorkflow,
   createRegionsWorkflow,
   createSalesChannelsWorkflow,
   createShippingOptionsWorkflow,
-  createShippingProfilesWorkflow,
   createStockLocationsWorkflow,
   createStoresWorkflow,
   createTaxRegionsWorkflow,
@@ -34,7 +32,8 @@ export default async function initial_data_seed({
     ModuleRegistrationName.FULFILLMENT
   );
 
-  const countries = ["gb", "de", "dk", "se", "fr", "es", "it"];
+  // DIKOROS: украинский рынок, единая валюта UAH, единая страна UA.
+  const countries = ["ua"];
 
   logger.info("Seeding store data...");
   const {
@@ -43,8 +42,8 @@ export default async function initial_data_seed({
     input: {
       salesChannelsData: [
         {
-          name: "Default Sales Channel",
-          description: "Created by Medusa",
+          name: "DIKOROS Storefront",
+          description: "Основной канал продаж DIKOROS",
         },
       ],
     },
@@ -56,7 +55,7 @@ export default async function initial_data_seed({
     input: {
       api_keys: [
         {
-          title: "Default Publishable API Key",
+          title: "DIKOROS Publishable API Key",
           type: "publishable",
           created_by: "",
         },
@@ -71,21 +70,15 @@ export default async function initial_data_seed({
     },
   });
 
-  const {
-    result: [store],
-  } = await createStoresWorkflow(container).run({
+  await createStoresWorkflow(container).run({
     input: {
       stores: [
         {
-          name: "Default Store",
+          name: "DIKOROS",
           supported_currencies: [
             {
-              currency_code: "eur",
+              currency_code: "uah",
               is_default: true,
-            },
-            {
-              currency_code: "usd",
-              is_default: false,
             },
           ],
           default_sales_channel_id: defaultSalesChannel.id,
@@ -99,8 +92,8 @@ export default async function initial_data_seed({
     input: {
       regions: [
         {
-          name: "Europe",
-          currency_code: "eur",
+          name: "Україна",
+          currency_code: "uah",
           countries,
           payment_providers: ["pp_system_default"],
         },
@@ -118,6 +111,8 @@ export default async function initial_data_seed({
     })),
   });
   logger.info("Finished seeding tax regions.");
+  // Ставку НДС 20% настраиваем в Admin UI вручную после первого запуска.
+  // ПДВ платник vs не платник единого налога — открытый вопрос ОВ-7.
 
   logger.info("Seeding stock location data...");
   const { result: stockLocationResult } = await createStockLocationsWorkflow(
@@ -126,11 +121,12 @@ export default async function initial_data_seed({
     input: {
       locations: [
         {
-          name: "European Warehouse",
+          name: "Київський склад",
           address: {
-            city: "Copenhagen",
-            country_code: "DK",
+            city: "Київ",
+            country_code: "UA",
             address_1: "",
+            // Точная точка самовывоза — открытый вопрос ОВ-4 у Юры.
           },
         },
       ],
@@ -148,7 +144,6 @@ export default async function initial_data_seed({
   });
 
   logger.info("Seeding fulfillment data...");
-  // This is created by a migration script in core.
   const { data: shippingProfileResult } = await query.graph({
     entity: "shipping_profile",
     fields: ["id"],
@@ -156,38 +151,14 @@ export default async function initial_data_seed({
   const shippingProfile = shippingProfileResult[0];
 
   const fulfillmentSet = await fulfillmentModuleService.createFulfillmentSets({
-    name: "European Warehouse delivery",
+    name: "Доставка по Україні",
     type: "shipping",
     service_zones: [
       {
-        name: "Europe",
+        name: "Україна",
         geo_zones: [
           {
-            country_code: "gb",
-            type: "country",
-          },
-          {
-            country_code: "de",
-            type: "country",
-          },
-          {
-            country_code: "dk",
-            type: "country",
-          },
-          {
-            country_code: "se",
-            type: "country",
-          },
-          {
-            country_code: "fr",
-            type: "country",
-          },
-          {
-            country_code: "es",
-            type: "country",
-          },
-          {
-            country_code: "it",
+            country_code: "ua",
             type: "country",
           },
         ],
@@ -207,28 +178,24 @@ export default async function initial_data_seed({
   await createShippingOptionsWorkflow(container).run({
     input: [
       {
-        name: "Standard Shipping",
+        name: "Нова Пошта (відділення)",
         price_type: "flat",
         provider_id: "manual_manual",
         service_zone_id: fulfillmentSet.service_zones[0].id,
         shipping_profile_id: shippingProfile.id,
         type: {
-          label: "Standard",
-          description: "Ship in 2-3 days.",
-          code: "standard",
+          label: "Відділення НП",
+          description: "Доставка до відділення Нової Пошти, 1-2 дні",
+          code: "nova-poshta-warehouse",
         },
         prices: [
           {
-            currency_code: "usd",
-            amount: 10,
-          },
-          {
-            currency_code: "eur",
-            amount: 10,
+            currency_code: "uah",
+            amount: 70,
           },
           {
             region_id: region.id,
-            amount: 10,
+            amount: 70,
           },
         ],
         rules: [
@@ -245,28 +212,58 @@ export default async function initial_data_seed({
         ],
       },
       {
-        name: "Express Shipping",
+        name: "Нова Пошта (кур'єр)",
         price_type: "flat",
         provider_id: "manual_manual",
         service_zone_id: fulfillmentSet.service_zones[0].id,
         shipping_profile_id: shippingProfile.id,
         type: {
-          label: "Express",
-          description: "Ship in 24 hours.",
-          code: "express",
+          label: "Кур'єр НП",
+          description: "Адресна доставка кур'єром, 1-2 дні",
+          code: "nova-poshta-courier",
         },
         prices: [
           {
-            currency_code: "usd",
-            amount: 10,
-          },
-          {
-            currency_code: "eur",
-            amount: 10,
+            currency_code: "uah",
+            amount: 120,
           },
           {
             region_id: region.id,
-            amount: 10,
+            amount: 120,
+          },
+        ],
+        rules: [
+          {
+            attribute: "enabled_in_store",
+            value: "true",
+            operator: "eq",
+          },
+          {
+            attribute: "is_return",
+            value: "false",
+            operator: "eq",
+          },
+        ],
+      },
+      {
+        name: "Самовивіз",
+        price_type: "flat",
+        provider_id: "manual_manual",
+        service_zone_id: fulfillmentSet.service_zones[0].id,
+        shipping_profile_id: shippingProfile.id,
+        type: {
+          label: "Самовивіз",
+          description: "Самовивіз з нашого складу в Києві",
+          code: "pickup",
+        },
+        prices: [
+          {
+            currency_code: "uah",
+            amount: 0,
+          },
+          {
+            region_id: region.id,
+            amount: 0,
           },
         ],
         rules: [
@@ -302,517 +299,160 @@ export default async function initial_data_seed({
     input: {
       product_categories: [
         {
-          name: "Shirts",
+          name: "Гриби",
+          handle: "gryby",
           is_active: true,
         },
         {
-          name: "Sweatshirts",
+          name: "Трави",
+          handle: "travy",
           is_active: true,
         },
         {
-          name: "Pants",
-          is_active: true,
-        },
-        {
-          name: "Merch",
+          name: "Мед",
+          handle: "med",
           is_active: true,
         },
       ],
     },
   });
 
+  // DEV-DATA: 3 demo-товара, по одному в категорию.
+  // Финальный каталог приедет миграцией из Хорошопа в Месяце 2.
   await createProductsWorkflow(container).run({
     input: {
       products: [
         {
-          title: "Medusa T-Shirt",
+          title: "Гриб Чага сушений",
           category_ids: [
-            categoryResult.find((cat) => cat.name === "Shirts")!.id,
+            categoryResult.find((cat) => cat.name === "Гриби")!.id,
           ],
           description:
-            "Reimagine the feeling of a classic T-shirt. With our cotton T-shirts, everyday essentials no longer have to be ordinary.",
-          handle: "t-shirt",
-          weight: 400,
+            "Сушений гриб Чага, зібраний у екологічно чистих регіонах України. Класичний адаптоген для щоденного вживання.",
+          handle: "hryb-chaha-sushenyy",
+          weight: 100,
           status: ProductStatus.PUBLISHED,
           shipping_profile_id: shippingProfile.id,
           images: [
             {
-              url: "https://medusa-public-images.s3.eu-west-1.amazonaws.com/tee-black-front.png",
-            },
-            {
-              url: "https://medusa-public-images.s3.eu-west-1.amazonaws.com/tee-black-back.png",
-            },
-            {
-              url: "https://medusa-public-images.s3.eu-west-1.amazonaws.com/tee-white-front.png",
-            },
-            {
-              url: "https://medusa-public-images.s3.eu-west-1.amazonaws.com/tee-white-back.png",
+              url: "https://placehold.co/600x600/2d3a1f/ffffff?text=Chaha",
             },
           ],
           options: [
             {
-              title: "Size",
-              values: ["S", "M", "L", "XL"],
-            },
-            {
-              title: "Color",
-              values: ["Black", "White"],
+              title: "Фасовка",
+              values: ["50 г", "100 г", "200 г"],
             },
           ],
           variants: [
             {
-              title: "S / Black",
-              sku: "SHIRT-S-BLACK",
-              options: {
-                Size: "S",
-                Color: "Black",
-              },
-              prices: [
-                {
-                  amount: 10,
-                  currency_code: "eur",
-                },
-                {
-                  amount: 15,
-                  currency_code: "usd",
-                },
-              ],
+              title: "50 г",
+              sku: "DKR-MUSHROOM-CHAHA-50",
+              options: { "Фасовка": "50 г" },
+              prices: [{ amount: 250, currency_code: "uah" }],
             },
             {
-              title: "S / White",
-              sku: "SHIRT-S-WHITE",
-              options: {
-                Size: "S",
-                Color: "White",
-              },
-              prices: [
-                {
-                  amount: 10,
-                  currency_code: "eur",
-                },
-                {
-                  amount: 15,
-                  currency_code: "usd",
-                },
-              ],
+              title: "100 г",
+              sku: "DKR-MUSHROOM-CHAHA-100",
+              options: { "Фасовка": "100 г" },
+              prices: [{ amount: 450, currency_code: "uah" }],
             },
             {
-              title: "M / Black",
-              sku: "SHIRT-M-BLACK",
-              options: {
-                Size: "M",
-                Color: "Black",
-              },
-              prices: [
-                {
-                  amount: 10,
-                  currency_code: "eur",
-                },
-                {
-                  amount: 15,
-                  currency_code: "usd",
-                },
-              ],
-            },
-            {
-              title: "M / White",
-              sku: "SHIRT-M-WHITE",
-              options: {
-                Size: "M",
-                Color: "White",
-              },
-              prices: [
-                {
-                  amount: 10,
-                  currency_code: "eur",
-                },
-                {
-                  amount: 15,
-                  currency_code: "usd",
-                },
-              ],
-            },
-            {
-              title: "L / Black",
-              sku: "SHIRT-L-BLACK",
-              options: {
-                Size: "L",
-                Color: "Black",
-              },
-              prices: [
-                {
-                  amount: 10,
-                  currency_code: "eur",
-                },
-                {
-                  amount: 15,
-                  currency_code: "usd",
-                },
-              ],
-            },
-            {
-              title: "L / White",
-              sku: "SHIRT-L-WHITE",
-              options: {
-                Size: "L",
-                Color: "White",
-              },
-              prices: [
-                {
-                  amount: 10,
-                  currency_code: "eur",
-                },
-                {
-                  amount: 15,
-                  currency_code: "usd",
-                },
-              ],
-            },
-            {
-              title: "XL / Black",
-              sku: "SHIRT-XL-BLACK",
-              options: {
-                Size: "XL",
-                Color: "Black",
-              },
-              prices: [
-                {
-                  amount: 10,
-                  currency_code: "eur",
-                },
-                {
-                  amount: 15,
-                  currency_code: "usd",
-                },
-              ],
-            },
-            {
-              title: "XL / White",
-              sku: "SHIRT-XL-WHITE",
-              options: {
-                Size: "XL",
-                Color: "White",
-              },
-              prices: [
-                {
-                  amount: 10,
-                  currency_code: "eur",
-                },
-                {
-                  amount: 15,
-                  currency_code: "usd",
-                },
-              ],
+              title: "200 г",
+              sku: "DKR-MUSHROOM-CHAHA-200",
+              options: { "Фасовка": "200 г" },
+              prices: [{ amount: 850, currency_code: "uah" }],
             },
           ],
-          sales_channels: [
-            {
-              id: defaultSalesChannel.id,
-            },
-          ],
+          sales_channels: [{ id: defaultSalesChannel.id }],
         },
         {
-          title: "Medusa Sweatshirt",
+          title: "Іван-чай ферментований",
           category_ids: [
-            categoryResult.find((cat) => cat.name === "Sweatshirts")!.id,
+            categoryResult.find((cat) => cat.name === "Трави")!.id,
           ],
           description:
-            "Reimagine the feeling of a classic sweatshirt. With our cotton sweatshirt, everyday essentials no longer have to be ordinary.",
-          handle: "sweatshirt",
-          weight: 400,
+            "Класичний український Іван-чай, ферментований за традиційною технологією. Природний тонізуючий напій без кофеїну.",
+          handle: "ivan-chay-fermentovanyy",
+          weight: 100,
           status: ProductStatus.PUBLISHED,
           shipping_profile_id: shippingProfile.id,
           images: [
             {
-              url: "https://medusa-public-images.s3.eu-west-1.amazonaws.com/sweatshirt-vintage-front.png",
-            },
-            {
-              url: "https://medusa-public-images.s3.eu-west-1.amazonaws.com/sweatshirt-vintage-back.png",
+              url: "https://placehold.co/600x600/3d5a2f/ffffff?text=Ivan-Chai",
             },
           ],
           options: [
             {
-              title: "Size",
-              values: ["S", "M", "L", "XL"],
+              title: "Фасовка",
+              values: ["50 г", "100 г", "200 г"],
             },
           ],
           variants: [
             {
-              title: "S",
-              sku: "SWEATSHIRT-S",
-              options: {
-                Size: "S",
-              },
-              prices: [
-                {
-                  amount: 10,
-                  currency_code: "eur",
-                },
-                {
-                  amount: 15,
-                  currency_code: "usd",
-                },
-              ],
+              title: "50 г",
+              sku: "DKR-HERB-IVANCHAI-50",
+              options: { "Фасовка": "50 г" },
+              prices: [{ amount: 180, currency_code: "uah" }],
             },
             {
-              title: "M",
-              sku: "SWEATSHIRT-M",
-              options: {
-                Size: "M",
-              },
-              prices: [
-                {
-                  amount: 10,
-                  currency_code: "eur",
-                },
-                {
-                  amount: 15,
-                  currency_code: "usd",
-                },
-              ],
+              title: "100 г",
+              sku: "DKR-HERB-IVANCHAI-100",
+              options: { "Фасовка": "100 г" },
+              prices: [{ amount: 320, currency_code: "uah" }],
             },
             {
-              title: "L",
-              sku: "SWEATSHIRT-L",
-              options: {
-                Size: "L",
-              },
-              prices: [
-                {
-                  amount: 10,
-                  currency_code: "eur",
-                },
-                {
-                  amount: 15,
-                  currency_code: "usd",
-                },
-              ],
-            },
-            {
-              title: "XL",
-              sku: "SWEATSHIRT-XL",
-              options: {
-                Size: "XL",
-              },
-              prices: [
-                {
-                  amount: 10,
-                  currency_code: "eur",
-                },
-                {
-                  amount: 15,
-                  currency_code: "usd",
-                },
-              ],
+              title: "200 г",
+              sku: "DKR-HERB-IVANCHAI-200",
+              options: { "Фасовка": "200 г" },
+              prices: [{ amount: 600, currency_code: "uah" }],
             },
           ],
-          sales_channels: [
-            {
-              id: defaultSalesChannel.id,
-            },
-          ],
+          sales_channels: [{ id: defaultSalesChannel.id }],
         },
         {
-          title: "Medusa Sweatpants",
+          title: "Мед липовий",
           category_ids: [
-            categoryResult.find((cat) => cat.name === "Pants")!.id,
+            categoryResult.find((cat) => cat.name === "Мед")!.id,
           ],
           description:
-            "Reimagine the feeling of classic sweatpants. With our cotton sweatpants, everyday essentials no longer have to be ordinary.",
-          handle: "sweatpants",
-          weight: 400,
+            "Натуральний липовий мед з пасік українського Полісся. Без термообробки та домішок.",
+          handle: "med-lypovyy",
+          weight: 500,
           status: ProductStatus.PUBLISHED,
           shipping_profile_id: shippingProfile.id,
           images: [
             {
-              url: "https://medusa-public-images.s3.eu-west-1.amazonaws.com/sweatpants-gray-front.png",
-            },
-            {
-              url: "https://medusa-public-images.s3.eu-west-1.amazonaws.com/sweatpants-gray-back.png",
+              url: "https://placehold.co/600x600/c4a032/ffffff?text=Honey",
             },
           ],
           options: [
             {
-              title: "Size",
-              values: ["S", "M", "L", "XL"],
+              title: "Об'єм",
+              values: ["250 мл", "500 мл", "1 л"],
             },
           ],
           variants: [
             {
-              title: "S",
-              sku: "SWEATPANTS-S",
-              options: {
-                Size: "S",
-              },
-              prices: [
-                {
-                  amount: 10,
-                  currency_code: "eur",
-                },
-                {
-                  amount: 15,
-                  currency_code: "usd",
-                },
-              ],
+              title: "250 мл",
+              sku: "DKR-HONEY-LYPA-250",
+              options: { "Об'єм": "250 мл" },
+              prices: [{ amount: 220, currency_code: "uah" }],
             },
             {
-              title: "M",
-              sku: "SWEATPANTS-M",
-              options: {
-                Size: "M",
-              },
-              prices: [
-                {
-                  amount: 10,
-                  currency_code: "eur",
-                },
-                {
-                  amount: 15,
-                  currency_code: "usd",
-                },
-              ],
+              title: "500 мл",
+              sku: "DKR-HONEY-LYPA-500",
+              options: { "Об'єм": "500 мл" },
+              prices: [{ amount: 400, currency_code: "uah" }],
             },
             {
-              title: "L",
-              sku: "SWEATPANTS-L",
-              options: {
-                Size: "L",
-              },
-              prices: [
-                {
-                  amount: 10,
-                  currency_code: "eur",
-                },
-                {
-                  amount: 15,
-                  currency_code: "usd",
-                },
-              ],
-            },
-            {
-              title: "XL",
-              sku: "SWEATPANTS-XL",
-              options: {
-                Size: "XL",
-              },
-              prices: [
-                {
-                  amount: 10,
-                  currency_code: "eur",
-                },
-                {
-                  amount: 15,
-                  currency_code: "usd",
-                },
-              ],
+              title: "1 л",
+              sku: "DKR-HONEY-LYPA-1000",
+              options: { "Об'єм": "1 л" },
+              prices: [{ amount: 750, currency_code: "uah" }],
             },
           ],
-          sales_channels: [
-            {
-              id: defaultSalesChannel.id,
-            },
-          ],
-        },
-        {
-          title: "Medusa Shorts",
-          category_ids: [
-            categoryResult.find((cat) => cat.name === "Merch")!.id,
-          ],
-          description:
-            "Reimagine the feeling of classic shorts. With our cotton shorts, everyday essentials no longer have to be ordinary.",
-          handle: "shorts",
-          weight: 400,
-          status: ProductStatus.PUBLISHED,
-          shipping_profile_id: shippingProfile.id,
-          images: [
-            {
-              url: "https://medusa-public-images.s3.eu-west-1.amazonaws.com/shorts-vintage-front.png",
-            },
-            {
-              url: "https://medusa-public-images.s3.eu-west-1.amazonaws.com/shorts-vintage-back.png",
-            },
-          ],
-          options: [
-            {
-              title: "Size",
-              values: ["S", "M", "L", "XL"],
-            },
-          ],
-          variants: [
-            {
-              title: "S",
-              sku: "SHORTS-S",
-              options: {
-                Size: "S",
-              },
-              prices: [
-                {
-                  amount: 10,
-                  currency_code: "eur",
-                },
-                {
-                  amount: 15,
-                  currency_code: "usd",
-                },
-              ],
-            },
-            {
-              title: "M",
-              sku: "SHORTS-M",
-              options: {
-                Size: "M",
-              },
-              prices: [
-                {
-                  amount: 10,
-                  currency_code: "eur",
-                },
-                {
-                  amount: 15,
-                  currency_code: "usd",
-                },
-              ],
-            },
-            {
-              title: "L",
-              sku: "SHORTS-L",
-              options: {
-                Size: "L",
-              },
-              prices: [
-                {
-                  amount: 10,
-                  currency_code: "eur",
-                },
-                {
-                  amount: 15,
-                  currency_code: "usd",
-                },
-              ],
-            },
-            {
-              title: "XL",
-              sku: "SHORTS-XL",
-              options: {
-                Size: "XL",
-              },
-              prices: [
-                {
-                  amount: 10,
-                  currency_code: "eur",
-                },
-                {
-                  amount: 15,
-                  currency_code: "usd",
-                },
-              ],
-            },
-          ],
-          sales_channels: [
-            {
-              id: defaultSalesChannel.id,
-            },
-          ],
+          sales_channels: [{ id: defaultSalesChannel.id }],
         },
       ],
     },
