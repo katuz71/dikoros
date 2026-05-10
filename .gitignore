@@ -64,3 +64,5 @@ coverage/
 # Misc
 *.tgz
 .cache/
+*.bak
+*.bak2
