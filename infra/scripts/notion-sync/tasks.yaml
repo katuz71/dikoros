@@ -1,0 +1,589 @@
+# tasks.yaml — синхронизация задач DIKOROS в Notion
+# Формат: каждая задача имеет slug (уникальный ID для идемпотентности),
+# title, status, priority, category, month, week, assignee, estimate_hours,
+# опционально: start_date, end_date, actual_hours, depends_on (список slug).
+
+# ============================================================
+# ЗАКРЫТЫЕ ЭТАПЫ 1-10 (status: Готово)
+# ============================================================
+
+- slug: stage-01-monorepo-setup
+  title: "Этап 1. Создание монорепо и базовой структуры"
+  status: Готово
+  priority: Высокий
+  category: Инфраструктура
+  month: Месяц 1
+  week: Неделя 1
+  assignee: Архитектор
+  estimate_hours: 4
+  actual_hours: 4
+  start_date: 2026-05-05
+  end_date: 2026-05-05
+
+- slug: stage-02-repo-cleanup
+  title: "Этап 2. Чистка legacy-репозитория, .gitignore, ротация секретов"
+  status: Готово
+  priority: Высокий
+  category: Безопасность
+  month: Месяц 1
+  week: Неделя 1
+  assignee: Исполнитель
+  estimate_hours: 6
+  actual_hours: 6
+  start_date: 2026-05-05
+  end_date: 2026-05-06
+
+- slug: stage-03-openapi-snapshot
+  title: "Этап 3. Снимок OpenAPI и кода Хорошоп (90 операций, 53 КБ)"
+  status: Готово
+  priority: Средний
+  category: Аудит
+  month: Месяц 1
+  week: Неделя 1
+  assignee: Архитектор
+  estimate_hours: 4
+  actual_hours: 4
+  start_date: 2026-05-06
+  end_date: 2026-05-06
+
+- slug: stage-04-api-contract
+  title: "Этап 4. Контракт API: USED/ADMIN/SERVICE/DEAD, 13 ADR"
+  status: Готово
+  priority: Высокий
+  category: Аудит
+  month: Месяц 1
+  week: Неделя 1
+  assignee: Архитектор
+  estimate_hours: 8
+  actual_hours: 8
+  start_date: 2026-05-06
+  end_date: 2026-05-07
+
+- slug: stage-05-horoshop-api-audit
+  title: "Этап 5. Аудит Horoshop API, robots.txt, sitemaps (723 URL)"
+  status: Готово
+  priority: Средний
+  category: Аудит
+  month: Месяц 1
+  week: Неделя 1
+  assignee: Исполнитель
+  estimate_hours: 5
+  actual_hours: 5
+  start_date: 2026-05-07
+  end_date: 2026-05-07
+
+- slug: stage-06-seo-crawl
+  title: "Этап 6. SEO-краулинг 723 URL (httpx + selectolax)"
+  status: Готово
+  priority: Средний
+  category: SEO
+  month: Месяц 1
+  week: Неделя 1
+  assignee: Исполнитель
+  estimate_hours: 6
+  actual_hours: 6
+  start_date: 2026-05-07
+  end_date: 2026-05-08
+
+- slug: stage-07-gsc-export
+  title: "Этап 7. Экспорт Google Search Console (3.12M строк, 356 МБ)"
+  status: Готово
+  priority: Средний
+  category: SEO
+  month: Месяц 1
+  week: Неделя 1
+  assignee: Исполнитель
+  estimate_hours: 4
+  actual_hours: 4
+  start_date: 2026-05-08
+  end_date: 2026-05-08
+
+- slug: stage-08-accesses
+  title: "Этап 8. Доступы и пароли, fail2ban на prod, fine-grained PAT"
+  status: Готово
+  priority: Высокий
+  category: Безопасность
+  month: Месяц 1
+  week: Неделя 1
+  assignee: Архитектор
+  estimate_hours: 5
+  actual_hours: 5
+  start_date: 2026-05-08
+  end_date: 2026-05-08
+
+- slug: stage-09-tz-draft
+  title: "Этап 9. ТЗ DIKOROS v1 (35-45 стр, 12 разделов), ADR 011, ADR 013"
+  status: Готово
+  priority: Критический
+  category: Документация
+  month: Месяц 1
+  week: Неделя 1
+  assignee: Архитектор
+  estimate_hours: 16
+  actual_hours: 16
+  start_date: 2026-05-07
+  end_date: 2026-05-09
+
+- slug: stage-10-medusa-bootstrap
+  title: "Этап 10. Bootstrap Medusa 2.14 backend, Docker dev-инфра, RUNBOOK"
+  status: Готово
+  priority: Критический
+  category: Backend
+  month: Месяц 1
+  week: Неделя 1
+  assignee: Исполнитель
+  estimate_hours: 12
+  actual_hours: 14
+  start_date: 2026-05-08
+  end_date: 2026-05-09
+
+# ============================================================
+# НЕДЕЛЯ 2 (12-18 мая) — фундамент backend + первая витрина
+# ============================================================
+
+- slug: w2-redis-real
+  title: "Подключить реальный Redis (cache, event-bus, workflow-engine)"
+  status: Запланировано
+  priority: Высокий
+  category: Backend
+  month: Месяц 1
+  week: Неделя 2
+  assignee: Исполнитель
+  estimate_hours: 0.5
+  start_date: 2026-05-12
+  end_date: 2026-05-12
+
+- slug: w2-seed-script
+  title: "Seed-скрипт: регион Украина, UAH, НДС 20%, sales channel, 8-10 товаров"
+  status: Запланировано
+  priority: Высокий
+  category: Backend
+  month: Месяц 1
+  week: Неделя 2
+  assignee: Исполнитель
+  estimate_hours: 1
+  start_date: 2026-05-12
+  end_date: 2026-05-12
+  depends_on:
+    - w2-redis-real
+
+- slug: w2-storefront-starter
+  title: "Запустить Medusa Next.js Storefront Starter в apps/web (port 8000)"
+  status: Запланировано
+  priority: Высокий
+  category: Frontend
+  month: Месяц 1
+  week: Неделя 2
+  assignee: Исполнитель
+  estimate_hours: 2
+  start_date: 2026-05-13
+  end_date: 2026-05-13
+  depends_on:
+    - w2-seed-script
+
+- slug: w2-adr-014-payment
+  title: "ADR #014: выбор платёжного провайдера (LiqPay vs Fondy vs Monobank)"
+  status: Запланировано
+  priority: Высокий
+  category: Документация
+  month: Месяц 1
+  week: Неделя 2
+  assignee: Архитектор
+  estimate_hours: 3
+  start_date: 2026-05-14
+  end_date: 2026-05-15
+
+- slug: w2-client-call
+  title: "Созвон с клиентом (финансы/HR/операционка), формализовать процессы"
+  status: Запланировано
+  priority: Высокий
+  category: Коммуникация
+  month: Месяц 1
+  week: Неделя 2
+  assignee: Клиент
+  estimate_hours: 1.5
+  start_date: 2026-05-13
+  end_date: 2026-05-13
+
+- slug: w2-brand-guide
+  title: "Получить от клиента брендбук (логотип, цвета, шрифты)"
+  status: Запланировано
+  priority: Средний
+  category: Дизайн
+  month: Месяц 1
+  week: Неделя 2
+  assignee: Клиент
+  estimate_hours: 0.5
+  start_date: 2026-05-12
+  end_date: 2026-05-15
+
+- slug: w2-docs-sync
+  title: "Обновить CONTEXT.md и ARCHITECTURE.md (порты, пакеты, сервисы)"
+  status: Запланировано
+  priority: Средний
+  category: Документация
+  month: Месяц 1
+  week: Неделя 2
+  assignee: Архитектор
+  estimate_hours: 1.5
+  start_date: 2026-05-15
+  end_date: 2026-05-15
+  depends_on:
+    - w2-storefront-starter
+
+- slug: w2-weekly-report
+  title: "Недельный отчёт клиенту (вс 18 мая)"
+  status: Запланировано
+  priority: Высокий
+  category: Коммуникация
+  month: Месяц 1
+  week: Неделя 2
+  assignee: Архитектор
+  estimate_hours: 1
+  start_date: 2026-05-18
+  end_date: 2026-05-18
+
+# ============================================================
+# НЕДЕЛЯ 3 (19-25 мая) — UA-интеграции и кастомные модули
+# ============================================================
+
+- slug: w3-payment-provider
+  title: "Кастомный платёжный провайдер (LiqPay sandbox)"
+  status: Запланировано
+  priority: Критический
+  category: Backend
+  month: Месяц 1
+  week: Неделя 3
+  assignee: Исполнитель
+  estimate_hours: 12
+  start_date: 2026-05-19
+  end_date: 2026-05-21
+  depends_on:
+    - w2-adr-014-payment
+
+- slug: w3-nova-poshta
+  title: "Fulfillment provider Nova Poshta (отделения, расчёт стоимости)"
+  status: Запланировано
+  priority: Критический
+  category: Backend
+  month: Месяц 1
+  week: Неделя 3
+  assignee: Исполнитель
+  estimate_hours: 10
+  start_date: 2026-05-21
+  end_date: 2026-05-23
+
+- slug: w3-cashback-skeleton
+  title: "Скелет модуля cashback: модели, миграции, подписка на order.completed"
+  status: Запланировано
+  priority: Высокий
+  category: Backend
+  month: Месяц 1
+  week: Неделя 3
+  assignee: Исполнитель
+  estimate_hours: 6
+  start_date: 2026-05-23
+  end_date: 2026-05-24
+
+- slug: w3-ngrok-webhooks
+  title: "Настроить ngrok для тестирования платёжных вебхуков локально"
+  status: Запланировано
+  priority: Средний
+  category: Инфраструктура
+  month: Месяц 1
+  week: Неделя 3
+  assignee: Исполнитель
+  estimate_hours: 0.5
+  start_date: 2026-05-19
+  end_date: 2026-05-19
+
+- slug: w3-weekly-report
+  title: "Недельный отчёт клиенту (вс 25 мая)"
+  status: Запланировано
+  priority: Высокий
+  category: Коммуникация
+  month: Месяц 1
+  week: Неделя 3
+  assignee: Архитектор
+  estimate_hours: 1
+  start_date: 2026-05-25
+  end_date: 2026-05-25
+
+# ============================================================
+# НЕДЕЛЯ 4 (26 мая - 1 июня) — кастомизация витрины
+# ============================================================
+
+- slug: w4-storefront-branding
+  title: "Кастомизация витрины под бренд DIKOROS (UI, цвета, типографика)"
+  status: Запланировано
+  priority: Высокий
+  category: Frontend
+  month: Месяц 1
+  week: Неделя 4
+  assignee: Исполнитель
+  estimate_hours: 16
+  start_date: 2026-05-26
+  end_date: 2026-05-29
+  depends_on:
+    - w2-brand-guide
+    - w2-storefront-starter
+
+- slug: w4-i18n-setup
+  title: "i18n витрины (UA/RU/EN) через next-intl"
+  status: Запланировано
+  priority: Высокий
+  category: Frontend
+  month: Месяц 1
+  week: Неделя 4
+  assignee: Исполнитель
+  estimate_hours: 6
+  start_date: 2026-05-28
+  end_date: 2026-05-29
+
+- slug: w4-payload-embed
+  title: "Встроить Payload CMS admin в apps/web"
+  status: Запланировано
+  priority: Средний
+  category: CMS
+  month: Месяц 1
+  week: Неделя 4
+  assignee: Исполнитель
+  estimate_hours: 8
+  start_date: 2026-05-29
+  end_date: 2026-05-30
+
+- slug: w4-admin-ua-translation
+  title: "Украинский перевод Medusa Admin (i18n JSON + вычитка ключевых экранов)"
+  status: Запланировано
+  priority: Высокий
+  category: Backend
+  month: Месяц 1
+  week: Неделя 4
+  assignee: Исполнитель
+  estimate_hours: 10
+  start_date: 2026-05-26
+  end_date: 2026-05-28
+
+- slug: w4-client-demo
+  title: "Демо клиенту (Zoom/AnyDesk): витрина + админка"
+  status: Запланировано
+  priority: Высокий
+  category: Коммуникация
+  month: Месяц 1
+  week: Неделя 4
+  assignee: Архитектор
+  estimate_hours: 1.5
+  start_date: 2026-05-31
+  end_date: 2026-05-31
+  depends_on:
+    - w4-storefront-branding
+
+- slug: w4-weekly-report
+  title: "Недельный отчёт клиенту (вс 1 июня)"
+  status: Запланировано
+  priority: Высокий
+  category: Коммуникация
+  month: Месяц 1
+  week: Неделя 4
+  assignee: Архитектор
+  estimate_hours: 1
+  start_date: 2026-06-01
+  end_date: 2026-06-01
+
+# ============================================================
+# МЕСЯЦ 2 (июнь) — контент и миграция данных
+# ============================================================
+
+- slug: m2-payload-schemas
+  title: "Payload CMS: схемы коллекций (товары, блог, страницы)"
+  status: Запланировано
+  priority: Высокий
+  category: CMS
+  month: Месяц 2
+  assignee: Исполнитель
+  estimate_hours: 12
+
+- slug: m2-data-migration
+  title: "Скрипт миграции данных Хорошоп → Medusa + Payload"
+  status: Запланировано
+  priority: Критический
+  category: Backend
+  month: Месяц 2
+  assignee: Исполнитель
+  estimate_hours: 24
+
+- slug: m2-cashback-loyalty
+  title: "Расширить cashback и loyalty модули (тиры, история, начисления)"
+  status: Запланировано
+  priority: Высокий
+  category: Backend
+  month: Месяц 2
+  assignee: Исполнитель
+  estimate_hours: 20
+
+- slug: m2-storefront-content
+  title: "Наполнить витрину контентом из миграции, проверка отображения"
+  status: Запланировано
+  priority: Высокий
+  category: Frontend
+  month: Месяц 2
+  assignee: Исполнитель
+  estimate_hours: 10
+
+# ============================================================
+# МЕСЯЦ 3 (июль) — мобайл и платежи
+# ============================================================
+
+- slug: m3-mobile-bootstrap
+  title: "Bootstrap React Native (Expo) приложения в apps/mobile"
+  status: Запланировано
+  priority: Высокий
+  category: Mobile
+  month: Месяц 3
+  assignee: Исполнитель
+  estimate_hours: 16
+
+- slug: m3-payment-prod
+  title: "Production-ключи LiqPay/Fondy, переключение с sandbox"
+  status: Запланировано
+  priority: Критический
+  category: Backend
+  month: Месяц 3
+  assignee: Исполнитель
+  estimate_hours: 6
+
+- slug: m3-push-notifications
+  title: "Expo push notifications, обработка delete-account"
+  status: Запланировано
+  priority: Средний
+  category: Mobile
+  month: Месяц 3
+  assignee: Исполнитель
+  estimate_hours: 12
+
+# ============================================================
+# МЕСЯЦ 4 (август) — инфраструктура и SEO
+# ============================================================
+
+- slug: m4-hetzner-deploy
+  title: "Развернуть Hetzner CX22: Docker, Postgres 16, Redis, SSH hardening"
+  status: Запланировано
+  priority: Критический
+  category: Инфраструктура
+  month: Месяц 4
+  assignee: Архитектор
+  estimate_hours: 12
+
+- slug: m4-caddy-ssl
+  title: "Caddy reverse-proxy + Let's Encrypt SSL"
+  status: Запланировано
+  priority: Критический
+  category: Инфраструктура
+  month: Месяц 4
+  assignee: Архитектор
+  estimate_hours: 4
+
+- slug: m4-staging-medusa
+  title: "Staging Medusa на сервере, миграция тестовых данных"
+  status: Запланировано
+  priority: Высокий
+  category: Инфраструктура
+  month: Месяц 4
+  assignee: Исполнитель
+  estimate_hours: 8
+  depends_on:
+    - m4-hetzner-deploy
+
+- slug: m4-ci-cd
+  title: "GitHub Actions CI/CD pipeline"
+  status: Запланировано
+  priority: Высокий
+  category: Инфраструктура
+  month: Месяц 4
+  assignee: Архитектор
+  estimate_hours: 8
+
+- slug: m4-monitoring
+  title: "Sentry + UptimeRobot, алерты"
+  status: Запланировано
+  priority: Высокий
+  category: Инфраструктура
+  month: Месяц 4
+  assignee: Архитектор
+  estimate_hours: 4
+
+- slug: m4-backups
+  title: "PostgreSQL бэкапы в Cloudflare R2 (daily, 30 дней retention)"
+  status: Запланировано
+  priority: Критический
+  category: Инфраструктура
+  month: Месяц 4
+  assignee: Архитектор
+  estimate_hours: 6
+
+- slug: m4-seo-redirects
+  title: "301 редиректы со старых URL Хорошоп, hreflang, sitemap"
+  status: Запланировано
+  priority: Критический
+  category: SEO
+  month: Месяц 4
+  assignee: Исполнитель
+  estimate_hours: 12
+
+- slug: m4-load-testing
+  title: "Нагрузочное тестирование (k6/Artillery)"
+  status: Запланировано
+  priority: Высокий
+  category: Инфраструктура
+  month: Месяц 4
+  assignee: Исполнитель
+  estimate_hours: 6
+
+# ============================================================
+# МЕСЯЦ 5 (сентябрь) — запуск
+# ============================================================
+
+- slug: m5-final-migration
+  title: "Финальная миграция данных с Хорошоп (продакшн-снимок)"
+  status: Запланировано
+  priority: Критический
+  category: Backend
+  month: Месяц 5
+  assignee: Исполнитель
+  estimate_hours: 8
+
+- slug: m5-cutover
+  title: "Cut-over: переключение домена dikoros.ua (сб 00:00-04:00 Київ)"
+  status: Запланировано
+  priority: Критический
+  category: Инфраструктура
+  month: Месяц 5
+  assignee: Архитектор
+  estimate_hours: 4
+
+- slug: m5-hypercare
+  title: "30-дневная hyper-care поддержка после запуска"
+  status: Запланировано
+  priority: Критический
+  category: Поддержка
+  month: Месяц 5
+  assignee: Исполнитель
+  estimate_hours: 40
+
+- slug: m5-admin-ua-translation-polish
+  title: "Финальная вычитка украинского перевода админки перед prod"
+  status: Запланировано
+  priority: Средний
+  category: Backend
+  month: Месяц 5
+  assignee: Исполнитель
+  estimate_hours: 4
+
+- slug: m5-handover
+  title: "Передача проекта клиенту: документация, доступы, тренинг"
+  status: Запланировано
+  priority: Высокий
+  category: Документация
+  month: Месяц 5
+  assignee: Архитектор
+  estimate_hours: 8
